@@ -1,2 +1,8 @@
 host = "127.0.0.1"
 secret = "grr123"
+
+attributes = [
+	"NAS-IP-Address": host,
+	"Service-Type": "Login-User",
+	"NAS-Identifier": "grr"
+]

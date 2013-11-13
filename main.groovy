@@ -72,23 +72,19 @@ if (cfgParsed && cfgParsed.attributes)
 
 if (dictionary)
 	cfg.dictionary = dictionary
-else {
-	println "missing dictionary file. exiting."
-	return
-}
 
 def populateConfig = 
 {
 	def addRequiredCfg = 
 	{ opt, val = null ->
-		if (val != null) 						   // if passed val isnt nul
-			cfg[opt] = val						   // set passed option
+		if (val != null)
+			cfg[opt] = val
 		else if(args.hasOption(opt))
-			cfg[opt] = args.getOptionValue(opt)	   // set cli option passed
+			cfg[opt] = args.getOptionValue(opt)
 		else if (cfgParsed == false|| !cfgParsed[opt])	
-			println "missing reqired option: $opt" // required option not present anywhere
+			println "missing reqired option: $opt"
 		else
-			cfg[opt] = cfgParsed[opt]			   // set from config file
+			cfg[opt] = cfgParsed[opt]
 	}
 
 	addRequiredCfg("host")
@@ -110,13 +106,16 @@ class Client
 	Client(Map cfg)
 	{
 		client = new RadiusClient(cfg.host, cfg.secret)
-		this.cfg = cfg
 		dictionary = DictionaryParser.parseDictionary(cfg.dictionary)
+
+		this.cfg = cfg
 
 		try {
 			this[cfg.action]()
-		}catch (ExceptionInInitializerError exp) {
+		} catch (ExceptionInInitializerError exp) {
 			println("error staring tinyradius - make sure your jar has default dictionary in it: see http://github.com/hoffoo/grr-radius/issues/1")
+		} catch (MissingPropertyException) {
+			println("unknown action ${cfg.action}")
 		}
 	}
 	

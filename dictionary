@@ -246,5 +246,3 @@ VENDORATTR      14122   WISPr-Bandwidth-Max-Down       8       integer
 VENDORATTR      14122   WISPr-Session-Terminate-Time  9       string
 VENDORATTR      14122   WISPr-Session-Terminate-End-Of-Day    10      integer
 VENDORATTR      14122   WISPr-Billing-Class-Of-Service        11      string
-
-

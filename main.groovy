@@ -26,7 +26,7 @@ def parser = new PosixParser()
 args = parser.parse(options, args)
 
 // missing args, print help and quit
-if (args.getArgList().size() == 0 || args.hasOption("help")) {
+if (args.getArgList().size() != 3 || args.hasOption("help")) {
 	help(options)
 	return
 }
@@ -44,10 +44,10 @@ try {
 
 Map cfg = [:]  // our final config - will be passed to Client
 
-// add attributes and dictionary into our into o
+// add attributes and dictionary into our into cfg
+cfg.dictionary = dictFile
 if (configFile?.attributes)
 	cfg.attributes = configFile.attributes
-	cfg.dictionary = dictFile
 
 def populateConfig = 
 {
